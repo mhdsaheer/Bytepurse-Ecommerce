@@ -268,7 +268,7 @@ const selectedDate = async () => {
     if (!salesReport || salesReport.length === 0) {
       document.getElementById('salesError').textContent = 'No sales records found in the selected date range.';
       document.getElementById('salesError').style.display = 'block';
-      reportTable.querySelector('tbody').innerHTML = ''; // Clear the table
+      reportTable.querySelector('tbody').innerHTML = ''; 
       return;
     }
 
