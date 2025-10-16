@@ -1,5 +1,7 @@
 const User = require("../models/userModel");
 const Product = require("../models/productModel");
+require("dotenv").config();
+
 
 const wishlistLoad = async (req, res) => {
   try {
@@ -8,12 +10,17 @@ const wishlistLoad = async (req, res) => {
       "wishlist.productId"
     );
     const wishlist = wishlistData.wishlist;
-    res.render("wishlist", { wishlist });
+
+    res.render("wishlist", {
+      wishlist,
+      googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY
+    });
   } catch (error) {
     console.log(error.message);
     res.render("500");
   }
 };
+
 const addWishlist = async (req, res) => {
   try {
     const { userId } = req.session;
