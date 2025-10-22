@@ -19,7 +19,7 @@ const viewProduct = async (req, res) => {
     const regex = new RegExp(`^${search}`, "i");
     const productsSearch = await Product.find();
     const page = parseInt(req.query.page) || 1;
-    const totalProducts = await Product.find({ title: { $regex: regex } }).count()
+    const totalProducts = await Product.countDocuments({ title: { $regex: regex } });
     const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
 
     const products = await Product.find({ title: { $regex: regex } })

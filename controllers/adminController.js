@@ -8,7 +8,7 @@ const CONTENTS_PER_PAGE = 5;
 const SALES_PER_PAGE = 10;
 
 
-const dotenv=require("dotenv")
+const dotenv = require("dotenv")
 dotenv.config({ path: '../.env' });
 
 let admin = {
@@ -73,9 +73,9 @@ const adminDashboard = async (req, res) => {
     const ordersCount = await Order.countDocuments();
     const productsCount = await Product.countDocuments();
     const categoryCount = await Category.countDocuments();
-    const placedCount = await Order.find({ status: "Placed" }).count();
-    const deliveredCount = await Order.find({ status: "Delivered" }).count();
-    const cancelledCount = await Order.find({ status: "Cancelled" }).count();
+    const placedCount = await Order.countDocuments({ status: "Placed" });
+    const deliveredCount = await Order.countDocuments({ status: "Delivered" });
+    const cancelledCount = await Order.countDocuments({ status: "Cancelled" });
     const orderData = await Order.find()
       .sort({ createdAt: -1 })
       .limit(5)
@@ -486,7 +486,7 @@ const salesReportLoad = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const totalOrders = await Order.countDocuments();
     const totalPages = Math.ceil(totalOrders / SALES_PER_PAGE);
-    
+
     // Add a $match stage to filter orders by status
     const orders = await Order.find({ status: 'Delivered' })
       .skip((page - 1) * SALES_PER_PAGE)
